@@ -1,9 +1,22 @@
-import React from 'react'
+import React , {useEffect, useState} from 'react'
 import ProductCard from './components/ProductCard'
 import './styles.scss'
 import { Link } from "react-router-dom";
+import { makeRequest } from '../../core/utils/Request';
+import {ProductsResponse} from '../../core/types/Product';
 
 const Catalog = () => {
+    const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
+   console.log(productsResponse);
+    useEffect(() => {
+            
+        const params = {
+            page: 0,
+            linesPerPage:10
+        }
+        makeRequest({url: '/products', params})
+                .then(response => setProductsResponse(response.data));
+    },[]);
     
     return (
 
@@ -12,12 +25,15 @@ const Catalog = () => {
                 Catálogo de produtos
             </h1>
             <div className="catalog-products">
-                <Link to="/products/1"><ProductCard /></Link>
-                <Link to="/products/2"><ProductCard /></Link>
-                <Link to="/products/3"><ProductCard /></Link>
-                <Link to="/products/4"><ProductCard /></Link>
-                <Link to="/products/5"><ProductCard /></Link>
-                <Link to="/products/6"><ProductCard /></Link>
+                
+                {productsResponse?.content.map(product => (
+
+                    <Link to={`/products/${product.id}`} key={product.id}>
+                        <ProductCard product ={product} />
+                    </Link>
+
+                ))}
+                
 
             </div>
 
@@ -26,7 +42,7 @@ const Catalog = () => {
 
 
 
-    )
+    );
 
 };
 
