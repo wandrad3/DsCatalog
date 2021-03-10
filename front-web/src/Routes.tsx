@@ -4,7 +4,7 @@ import Home from './pages/Home'
 import Catalog from './pages/Catalog'
 import Admin from './pages/Admin';
 import Navbar from './core/components/Navbar';
-import ProductDetails from '../src/pages/Catalog/components/ProductCard/ProductDetails'
+import ProductDetails from './pages/Catalog/ProductDetails'
 const Routes = () => {
 
     return (
